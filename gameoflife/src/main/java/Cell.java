@@ -1,17 +1,17 @@
 package main.java;
 
-public class GCell
+public class Cell
 {
     private boolean isAlive = true;
 
-    public GCell(boolean b)
+    public Cell(char chr)
     {
-        isAlive = b;
+        isAlive = chr == 'x';
     }
 
-    public GCell()
+    public Cell()
     {
-        this(true);
+        this('x');
     }
 
     public boolean isAlive()

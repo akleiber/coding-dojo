@@ -1,27 +1,23 @@
 package main.java;
 
-import java.util.HashMap;
-import java.util.Map;
+import test.java.DefaultRules;
 
 public class PlayingField
 {
-    private GCell[][] cells;
-
-    private String field;
+    private Cell[][] cells;
 
     public PlayingField(String field)
     {
         cells = parseString(field);
     }
 
-    private GCell[][] parseString(String field)
+    private Cell[][] parseString(String field)
     {
-        Map<Position, GCell> cellMap = new HashMap();
         String[] rows = field.split("\n");
-        GCell[][] cells = new GCell[rows.length][rows[0].length()];
-        for (int y = 0; y < rows.length; y++) {
-            for (int x = 0; x < rows[y].length(); x++) {
-                cells[x][y] = new GCell(rows[y].charAt(x) == 'x');
+        Cell[][] cells = new Cell[rows.length][rows[0].length()];
+        for (int x = 0; x < rows.length; x++) {
+            for (int y = 0; y < rows[x].length(); y++) {
+                cells[x][y] = new Cell(rows[x].charAt(y));
             }
         }
         
@@ -31,8 +27,8 @@ public class PlayingField
     public String toString()
     {
         String field = "";
-        for (GCell[] innerCells : cells) {
-            for (GCell cell : innerCells) {
+        for (Cell[] innerCells : cells) {
+            for (Cell cell : innerCells) {
                 field += cell.toString();
             }
             field += "\n";
@@ -41,32 +37,50 @@ public class PlayingField
         return field.trim();
     }
 
-    public void next()
-    {
-    }
-
     public int getAmountOfLivingNeighbours(Position position)
     {
         int amount = 0;
-        String[] rows = toString().split("\n");
 
-        int minY = Math.max(position.getY() -1, 0);
-        int minX = Math.max(position.getX() - 1, 0);
-        int maxY = Math.min(position.getY() +1, rows.length - 1);
-        int maxX = Math.min(position.getX() + 1, rows.length -1);
-
-        for (int y = minY; y <= maxY; y++) {
-            for (int x = minX; x <= maxX; x++) {
-                if (y == position.getY() && x == position.getX()) {
+        for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+            for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+                if (position.getX() == x && position.getY() == y) {
                     continue;
                 }
-
-                if(rows[y].charAt(x) == 'x') {
-                    amount++;
-                }
+                amount += getCell(new Position(x, y)).isAlive() ? 1 : 0;
             }
         }
-
         return amount;
+    }
+
+    private Cell getCell(Position pos)
+    {
+        try {
+            return cells[pos.getX()][pos.getY()];
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return new Cell('o');
+        }
+    }
+
+    public PlayingField evolve()
+    {
+        DefaultRules rules = new DefaultRules();
+        StringBuilder sb = new StringBuilder();
+
+        for (int x = 0; x < cells.length; x++) {
+            for (int y = 0; y < cells[x].length; y++) {
+                int livingNeighbours = getAmountOfLivingNeighbours(new Position(x, y));
+
+                if (rules.isAliveInNextIteration(cells[x][y], livingNeighbours)) {
+                    sb.append('x');
+                } else {
+                    sb.append('o');
+                }
+            }
+
+            sb.append("\n");
+        }
+
+
+        return new PlayingField(sb.toString().trim());
     }
 }

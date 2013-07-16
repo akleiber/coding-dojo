@@ -1,10 +1,10 @@
 package test.java;
 
-import main.java.GCell;
+import main.java.Cell;
 
 public class DefaultRules
 {
-    public boolean isAliveInNextIteration(GCell gCell, int i)
+    public boolean isAliveInNextIteration(Cell gCell, int i)
     {
         if (gCell.isAlive()) {
             return !(i < 2 || i > 3);

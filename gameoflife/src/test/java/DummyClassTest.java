@@ -1,6 +1,6 @@
 package test.java;
 
-import main.java.GCell;
+import main.java.Cell;
 import main.java.PlayingField;
 import main.java.Position;
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class DummyClassTest
     @Test
     public void cell_should_die() throws Exception
     {
-        GCell gCell = new GCell();
+        Cell gCell = new Cell();
         assertTrue(gCell.isAlive());
         gCell.die();
         assertFalse(gCell.isAlive());
@@ -21,15 +21,8 @@ public class DummyClassTest
     @Test
     public void cell_should_be_createable_as_dead_cell()
     {
-        GCell gCell = new GCell(false);
+        Cell gCell = new Cell('o');
         assertFalse(gCell.isAlive());
-    }
-
-    @Test
-    public void construct_from_input_should_fill_field()
-    {
-        String pattern = "xox\nxox\nxxx";
-        PlayingField playingField = new PlayingField(pattern);
     }
 
     @Test
@@ -44,7 +37,7 @@ public class DummyClassTest
     public void is_alive_should_return_false_for_one_living_neighbours()
     {
         DefaultRules rules = new DefaultRules();
-        GCell gCell = new GCell();
+        Cell gCell = new Cell();
         boolean isAlive = rules.isAliveInNextIteration(gCell, 1);
         assertFalse(isAlive);
     }
@@ -53,7 +46,7 @@ public class DummyClassTest
     public void is_alive_should_return_false_for_more_than_three_living_neighbours()
     {
         DefaultRules rules = new DefaultRules();
-        GCell gCell = new GCell();
+        Cell gCell = new Cell();
         boolean isAlive = rules.isAliveInNextIteration(gCell, 4);
         assertFalse(isAlive);
     }
@@ -62,7 +55,7 @@ public class DummyClassTest
     public void is_alive_should_return_true_for_two_living_neighbours()
     {
         DefaultRules rules = new DefaultRules();
-        GCell gCell = new GCell();
+        Cell gCell = new Cell();
         boolean isAlive = rules.isAliveInNextIteration(gCell, 2);
         assertTrue(isAlive);
     }
@@ -70,7 +63,7 @@ public class DummyClassTest
     @Test
     public void is_alive_for_dead_cell_should_return_false_for_two_living_neighbours() {
         DefaultRules rules = new DefaultRules();
-        GCell gCell = new GCell(false);
+        Cell gCell = new Cell('o');
         boolean isAlive = rules.isAliveInNextIteration(gCell, 2);
         assertFalse(isAlive);
     }
@@ -78,7 +71,7 @@ public class DummyClassTest
     @Test
     public void is_alive_for_dead_cell_should_return_true_for_three_living_neighbours() {
         DefaultRules rules = new DefaultRules();
-        GCell gCell = new GCell(false);
+        Cell gCell = new Cell('o');
         boolean isAlive = rules.isAliveInNextIteration(gCell, 3);
         assertTrue(isAlive);
     }
@@ -87,7 +80,7 @@ public class DummyClassTest
     public void is_alive_should_return_true_for_three_living_neighbours()
     {
         DefaultRules rules = new DefaultRules();
-        GCell gCell = new GCell();
+        Cell gCell = new Cell();
         boolean isAlive = rules.isAliveInNextIteration(gCell, 3);
         assertTrue(isAlive);
     }
@@ -126,8 +119,7 @@ public class DummyClassTest
     public void iterate()
     {
         PlayingField playingField = new PlayingField("ooo\nxxx\noxo");
-        playingField.evolve();
-        assertEquals("oxo\nxxx\noxo", playingField.toString());
-
+        PlayingField nextGeneration = playingField.evolve();
+        assertEquals("oxo\nxxx\nxxx", nextGeneration.toString());
     }
 }
