@@ -28,9 +28,8 @@ public class DummyClassTest
     @Test
     public void construct_from_input_should_fill_field()
     {
-        String pattern = "xox\nxox\nxxx\n";
+        String pattern = "xox\nxox\nxxx";
         PlayingField playingField = new PlayingField(pattern);
-
     }
 
     @Test
@@ -113,6 +112,22 @@ public class DummyClassTest
         assertEquals(3, amount);
     }
 
+    @Test
+    public void get_amount_of_living_neighbours_should_return_2()
+    {
+        PlayingField playingField = new PlayingField("ooo\nxxx\noxo");
+        Position position = new Position(0, 0);
+        int amount = playingField.getAmountOfLivingNeighbours(position);
 
+        assertEquals(2, amount);
+    }
 
+    @Test
+    public void iterate()
+    {
+        PlayingField playingField = new PlayingField("ooo\nxxx\noxo");
+        playingField.evolve();
+        assertEquals("oxo\nxxx\noxo", playingField.toString());
+
+    }
 }

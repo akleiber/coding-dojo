@@ -23,4 +23,10 @@ public class GCell
     {
         isAlive = false;
     }
+
+    @Override
+    public String toString()
+    {
+        return isAlive ? "x" : "o";
+    }
 }
