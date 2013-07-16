@@ -1,7 +1,6 @@
 package main.java;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PlayingField
@@ -13,6 +12,7 @@ public class PlayingField
     public PlayingField(String field)
     {
         this.field = field;
+
     }
 
     public String toString()
@@ -24,8 +24,17 @@ public class PlayingField
     {
     }
 
-    public List<GCell> getLivingNeighbours(Position position)
+    public int getAmountOfLivingNeighbours(Position position)
     {
-
+        int amount = 0;
+        String[] rows = field.split("\n");
+        for (int i = position.getY() - 1; i < position.getY() + 1; i++) {
+            for (int j = position.getX() - 1; j < position.getX() + 1; j++) {
+                if(rows[i].charAt(j) == 'x') {
+                    amount++;
+                }
+            }
+        }
+        return amount;
     }
 }

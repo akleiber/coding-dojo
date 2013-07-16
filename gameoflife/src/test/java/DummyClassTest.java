@@ -5,8 +5,6 @@ import main.java.PlayingField;
 import main.java.Position;
 import org.junit.Test;
 
-import java.util.List;
-
 import static junit.framework.Assert.*;
 
 public class DummyClassTest
@@ -96,14 +94,23 @@ public class DummyClassTest
     }
 
     @Test
-    public void playing_field_should_return_living_neighbours()
+    public void get_amount_of_living_neighbours_should_return_4()
     {
         PlayingField playingField = new PlayingField("oxo\nxxx\noxo");
         Position position = new Position(1, 1);
-        List<GCell> cellist = playingField.getLivingNeighbours(position);
+        int amount = playingField.getAmountOfLivingNeighbours(position);
 
-        assertNotNull(cellist);
-        assertEquals(4, cellist.size());
+        assertEquals(4, amount);
+    }
+
+    @Test
+    public void get_amount_of_living_neighbours_should_return_3()
+    {
+        PlayingField playingField = new PlayingField("ooo\nxxx\noxo");
+        Position position = new Position(1, 1);
+        int amount = playingField.getAmountOfLivingNeighbours(position);
+
+        assertEquals(3, amount);
     }
 
 
