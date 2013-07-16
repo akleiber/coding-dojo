@@ -20,32 +20,27 @@ public class DummyClassTest
     }
 
     @Test
-    public void add_should_add_cell_to_field() throws Exception
-    {
-        PlayingField playingField = new PlayingField();
-        GCell cell = new GCell();
-        Position position = new Position(1,1);
-        playingField.addCell(cell, position);
-    }
-
-    @Test(expected = PositionAlreadyOccupied.class)
-    public void add_cell_to_occupied_position_should_throw_exception()
-    {
-        PlayingField playingField = new PlayingField();
-        GCell cell = new GCell();
-        Position position = new Position(1,1);
-        playingField.addCell(cell, position);
-        playingField.addCell(cell, position);
-
-    }
-
-    @Test
     public void construct_from_input_should_fill_field()
     {
         String pattern = "xox\nxox\nxxx\n";
         PlayingField playingField = new PlayingField(pattern);
-        playingField.
 
     }
 
+    @Test
+    public void tostring_should_return_current_evolution()
+    {
+        String pattern = "oxo\nxxx\noxo";
+        PlayingField playingField = new PlayingField(pattern);
+        assertEquals(pattern, playingField.toString());
+    }
+
+    @Test
+    public void evolution_irgendwas()
+    {
+        String pattern = "ooo\nooo\nxxx";
+        PlayingField playingField = new PlayingField(pattern);
+        playingField.next();
+        assertEquals("ooo\noxo\noxo", playingField.toString());
+    }
 }

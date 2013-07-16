@@ -5,13 +5,22 @@ import java.util.Map;
 
 public class PlayingField
 {
-    private Map<Position, GCell> cells = new HashMap<Position, GCell>();
+    private Map<Position, main.java.GCell> cells = new HashMap<Position, main.java.GCell>();
 
-    public void addCell(GCell cell, Position position)
+    private String field;
+
+    public PlayingField(String field)
     {
-        if (cells.containsKey(position)) {
-            throw new PositionAlreadyOccupied();
-        }
-        cells.put(position, cell);
+        this.field = field;
+
+    }
+
+    public String toString()
+    {
+        return field;
+    }
+
+    public void next()
+    {
     }
 }
