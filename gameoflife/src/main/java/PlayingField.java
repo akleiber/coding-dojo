@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayingField
@@ -12,7 +13,6 @@ public class PlayingField
     public PlayingField(String field)
     {
         this.field = field;
-
     }
 
     public String toString()
@@ -22,5 +22,10 @@ public class PlayingField
 
     public void next()
     {
+    }
+
+    public List<GCell> getLivingNeighbours(Position position)
+    {
+
     }
 }
